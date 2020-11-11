@@ -23,16 +23,19 @@ class Scraper
   def self.scrape_profile_page(profile_url)
     student_hash = {}
     html = Nokogiri::HTML(open(profile_url))
-    html.css(".social-icon-container").each do |student|
-      url = student.attribute("href")
-      student_hash[:twitter_url] = url if url.include?("twitter")
-      student_hash[:linkedin_url] = url if url.include?("linkedin")
-      student_hash[:github_url] = url if url.include?("github")
-      student_hash[:blog_url] = url if student.css("img").attribute("src").text.include?("rss")
+    
+    box = doc.css(".social-icon-container").children.css("a").collect {|a| a.attribute("href").value}
+    box.each do |url|
+      if url.include?("twitter")
+        profile[:twitter] = url
+      elsif url.include?("linkedin")
+        profile[:linkedin] = url
+      elsif url.include?("github")
+        profile[:github] = url
+      else
+        profile[:blog] = url
+      end
     end
-    student_hash[:profile_quote] = html.css(".profile_quote").text
-    student_hash[:bio] = html.css(".bio-content p").text
-    student_hash
   end
 
 
