@@ -29,6 +29,10 @@ class Scraper
       student_hash[:linkedin_url] = url if url.include?("linkedin")
       student_hash[:github_url] = url if url.include?("github")
       student_hash[:blog_url] = url if student.css("img").attribute("src").text.include?("rss")
+    end
+    student_hash[:profile_quote] = html.css(".profile_quote").text
+    student_hash[:bio] = html.css(".bio-content p").text
+    student_hash
   end
 
 
