@@ -27,13 +27,13 @@ class Scraper
     box = html.css(".social-icon-container").children.css("a").collect {|a| a.attribute("href").value}
     box.each do |url|
       if url.include?("twitter")
-        profile[:twitter] = url
+        student_hash[:twitter] = url
       elsif url.include?("linkedin")
-        profile[:linkedin] = url
+        student_hash[:linkedin] = url
       elsif url.include?("github")
-        profile[:github] = url
+        student_hash[:github] = url
       else
-        profile[:blog] = url
+        student_hash[:blog] = url
       end
     end
   end
